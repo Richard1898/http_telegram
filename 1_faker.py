@@ -13,24 +13,36 @@ while True:
     print("1. 5 personu vārdi un uzvārdi")
     print("2. 5 personu vārdi un uzvārdi latviešu valodā")
     print("3. 5 persona vārdi un uzvārdi ar telefona numuru, adresi un personas kodu")
-    print("5. Teksts dotā maksimāla garumā") # lietotājs ievada maksimalo garumu
-    print("6. 5 Dazādas cenas") # valūtas zīme un summa
-    print("7. Exit")
+    print("4. Teksts dotā maksimāla garumā") # lietotājs ievada maksimalo garumu
+    print("5. 5 Dazādas cenas") # valūtas zīme un summa
+    print("6. Exit")
     choice = input("Enter your choice: ")
 
     if choice == "1":
-        pass
+        fake = Faker()
+        for a in range(5):
+            print(fake.name())
     elif choice == "2":
-        pass
+        fake = Faker('lv_LV')
+        for a in range(5):
+            print(fake.name())
     elif choice == "3":
-        pass    
+        fake = Faker()
+        for a in range(5):
+            print(fake.name())
+            print(fake.address())
+            print(fake.phone_number())
+            print(fake.ssn())
     elif choice == "4":
-        pass
+        fake = Faker()
+        x = int(input("Ievadi skaitli: "))
+        for a in range(x):
+            print(fake.text())
     elif choice == "5":
-        pass
+        fake = Faker()
+        for a in range(5):
+            print(fake.pricetag())
     elif choice == "6":
-        pass
-    elif choice == "7":
         break
     else:
         print("Invalid choice. Please try again.")

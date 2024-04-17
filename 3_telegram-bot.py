@@ -15,16 +15,17 @@
 # 6. Izmantojot kodu no iepriekšēja piemēra (1_faker.py), izveido jaunu komandu /fakeperson, kura uzģenerē personas vārdu, uzvārdu ar telefona numuru, adresi un personas kodu
 # 
 # 7. Izmantojot kodu no iepriekšēja piemēra (2_chuck_norris.py), izveido jaunu komandu /chuck, kura uzģenerē jaunu joku par programmetājiem
-
+from faker import Faker
+import requests
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 # izveido bota pieslēgumu Telegram
-app = ApplicationBuilder().token("YOUR_TOKEN").build()
+app = ApplicationBuilder().token("6716903213:AAFn4ODO4Yc_CZommLLn-sp43MbHxm1rXO4").build()
 
 # komanda /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("I'm test bot. Type /hello or /echo")
+    await update.message.reply_text("I'm test bot. Type /hello or /echo or /fakeperson or /chuck")
 
 # komanda /hello
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -35,10 +36,28 @@ async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text("I hear: " + update.message.text)
 
+async def fakeperson(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    fake = Faker()
+    z = fake.name()
+    zg = fake.address()
+    zf = fake.phone_number()
+    zt = fake.ssn()
+    await update.message.reply_text(z)
+    await update.message.reply_text(zg)
+    await update.message.reply_text(zf)
+    await update.message.reply_text(zt)
+    
+async def chuck(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    r = requests.get('https://api.chucknorris.io/jokes/random?category=dev')
+    h = r.json()
+    x = h['value']
+    await update.message.reply_text(x)
+
 # savieno čata komandu ar funkciju
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("hello", hello))
 app.add_handler(CommandHandler("echo", echo))
-
+app.add_handler(CommandHandler("fakeperson", fakeperson))
+app.add_handler(CommandHandler("chuck", chuck))
 # sāk bota darbību
 app.run_polling()
